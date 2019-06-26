@@ -5,14 +5,65 @@ using namespace std;
 
 //--------------------------------------------------
 
+//Дополнительные функции
+int game::Vowel() {
+	int count = 0;
+	char mass[] = { "аеоуияэыёАЁОУИЯЭЫЁ" };
+	for (int i = 0; i < strlen(name); i++)
+	{
+		for (int j = 0; j < strlen(mass); j++)
+		{
+			if (name[i] == mass[j])
+			{
+				count++;
+			}
+		}
+	}
+	return count;
+}
+
+int cartoon::Vowel() {
+	int count = 0;
+	char mass[] = { "аеоуияэыёАЁОУИЯЭЫЁ" };
+	for (int i = 0; i < strlen(name); i++)
+	{
+		for (int j = 0; j < strlen(mass); j++)
+		{
+			if (name[i] == mass[j])
+			{
+				count++;
+			}
+		}
+	}
+	return count;
+}
+
+// Вывод содержимого контейнера
+void container::Vowel(ifstream &ifst, ofstream &ofst)
+{
+	ofst << "Контейнер содержит количество элементов равное: " << count << endl;
+	List* current = Top;
+	film *fm;
+	for (int j = 0; j < count; j++)
+	{
+		
+			ofst << j + 1 << ": ";
+			current->data->Out(ofst);
+			ofst << "Количество гласных в названии: " << current->data->Vowel() << endl;
+			current = current->Next;
+	}
+}
+
+//--------------------------------------------------
+
 //Ввод параметров игрового фильма из файла
 void game::InData(ifstream &ifst) {
-	ifst  >> name >> director;
+	ifst >> name >> director;
 }
 
 //Вывод параметров игрового фильма в поток
 void game::Out(ofstream &ofst) {
-	ofst << "Это игровой фильм. " << " Название фильма: " << name
+	ofst << "Это игровой фильм: " << ", Название фильма: " << name
 		<< ", Режиссёр: " << director << endl;
 }
 
@@ -20,12 +71,12 @@ void game::Out(ofstream &ofst) {
 
 //Ввод параметров мультфильма из потока
 void cartoon::InData(ifstream &ifst) {
-	ifst >>  name >> type;
+	ifst >> name >> type;
 }
 
 //Вывод параметров мультфильма в поток
 void cartoon::Out(ofstream &ofst) {
-	ofst << "Это мультильм. " << " Название фильма: " << name << ", вид мультфильма: ";
+	ofst << "Это мультильм: " << ", Название фильма: " << name << ", вид мультфильма: ";
 
 	if (type == 1) {
 		ofst << "рисованный" << endl;
@@ -34,7 +85,6 @@ void cartoon::Out(ofstream &ofst) {
 		ofst << "кукольный" << endl;
 	}
 }
-
 
 //--------------------------------------------------
 
@@ -67,7 +117,6 @@ film* film::In(ifstream &ifst)
 //Инициализация контейнера
 container::container()
 {
-
 	Top = nullptr;
 	count = 0;
 }
@@ -81,8 +130,6 @@ container::List::List()
 }
 
 //--------------------------------------------------
-
-
 
 //Добавление узла
 int container::add(ifstream &ifst)
@@ -164,6 +211,8 @@ void container::Out(ofstream & ofst)
 	{
 		ofst << j + 1 << ": ";
 		current->data->Out(ofst);
+		ofst << "Количество гласных в названии: " << current->data->Vowel() << endl;
 		current = current->Next;
 	}
 }
+//----------------------------------------------------
