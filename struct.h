@@ -10,6 +10,7 @@ public:
 	virtual void InData(ifstream &ifst) = 0;//Ввод данных о фильме
 	virtual void Out(ofstream &ofst) = 0;//Вывод дынных о фильме
 };
+
 //Контейнер
 class container
 {
@@ -23,12 +24,12 @@ private:
 		film* data;//Указатель на данные о фильме
 	};
 public:
-	int add(ifstream &ifst);//Функция добавление нового списка в контейнер
-	void In(ifstream &ifst);//Ввод данных в контейнер
-	void Out(ofstream &ofst);//Вывод данных из контейнера
+	int add(ifstream& ifst);//Функция добавление нового списка в контейнер
+	void In(ifstream& ifst);//Ввод данных в контейнер
+	void Out(ofstream& ofst);//Вывод данных из контейнера
 	void Clear();//Отчистка данных из контейнер
 	container();//Инициализация контейнера
-				//~container() { Clear(); } // утилизация контейнера-вызывает ошибку
+	//~container() { Clear(); } // утилизация контейнера-вызывает ошибку
 	List* Top;//Указатель на последний список в контейнере
 	int count;//Число списков в контейнере
 };
@@ -53,4 +54,4 @@ public:
 	void Out(ofstream &ofst);//Вывод дынных о фильме
 	cartoon() {}//Создание без инициализации.
 };
-#endif 
+#endif
