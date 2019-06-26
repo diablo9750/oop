@@ -32,6 +32,7 @@ void main(int argc, char* argv[])
 	c.In(ifst);
 	ofst << "Контейнер полон." << endl;
 	c.Out(ofst);
+	c.OutGame(ofst);
 	c.Clear();
 	ofst << "Контейнер пуст." << endl;
 	c.Out(ofst);

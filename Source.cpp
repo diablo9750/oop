@@ -54,31 +54,31 @@ int doc::Vowel() {
 }
 
 // Вывод содержимого контейнера
-void container::Vowel(ifstream &ifst, ofstream &ofst)
+void container::Vowel(ifstream& ifst, ofstream& ofst)
 {
 	ofst << "Контейнер содержит количество элементов равное: " << count << endl;
 	List* current = Top;
 	Sort();
-	film *fm;
+	film* fm;
 	for (int j = 0; j < count; j++)
 	{
-		
-			ofst << j + 1 << ": ";
-			current->data->Out(ofst);
-			ofst << "Количество гласных в названии: " << current->data->Vowel() << endl;
-			current = current->Next;
+
+		ofst << j + 1 << ": ";
+		current->data->Out(ofst);
+		ofst << "Количество гласных в названии: " << current->data->Vowel() << endl;
+		current = current->Next;
 	}
 }
 
 //--------------------------------------------------
 
 //Ввод параметров игрового фильма из файла
-void game::InData(ifstream &ifst) {
+void game::InData(ifstream& ifst) {
 	ifst >> country >> name >> director;
 }
 
 //Вывод параметров игрового фильма в поток
-void game::Out(ofstream &ofst) {
+void game::Out(ofstream& ofst) {
 	ofst << "Это игровой фильм. Страна, где произведён фильм: " << country << ", Название фильма: " << name
 		<< ", Режиссёр: " << director << endl;
 }
@@ -86,12 +86,12 @@ void game::Out(ofstream &ofst) {
 //--------------------------------------------------
 
 //Ввод параметров мультфильма из потока
-void cartoon::InData(ifstream &ifst) {
+void cartoon::InData(ifstream& ifst) {
 	ifst >> country >> name >> type;
 }
 
 //Вывод параметров мультфильма в поток
-void cartoon::Out(ofstream &ofst) {
+void cartoon::Out(ofstream& ofst) {
 	ofst << "Это мультильм. Страна, где произведён фильм: " << country << ", Название фильма: " << name << ", вид мультфильма: ";
 
 	if (type == 1) {
@@ -105,20 +105,20 @@ void cartoon::Out(ofstream &ofst) {
 //--------------------------------------------------
 
 //Ввод параметров мультфильма из потока
-void doc::InData(ifstream &ifst) {
+void doc::InData(ifstream& ifst) {
 	ifst >> name >> date;
 }
 
 //Вывод параметров мультфильма в поток
-void doc::Out(ofstream &ofst) {
+void doc::Out(ofstream& ofst) {
 	ofst << "Это доументальный фильм: " << ", Название фильма: " << name << ", Год выпуска: " << date << endl;
 }
 //--------------------------------------------------
 
 //Ввод параметров обобщенного фильма из файла
-film* film::In(ifstream &ifst)
+film* film::In(ifstream& ifst)
 {
-	film *fm;
+	film* fm;
 	int key;
 	ifst >> key;
 	switch (key)
@@ -163,7 +163,7 @@ container::List::List()
 //--------------------------------------------------
 
 //Добавление узла
-int container::add(ifstream &ifst)
+int container::add(ifstream& ifst)
 {
 	//Если контейнер пустой
 	if (count == 0)
@@ -177,7 +177,7 @@ int container::add(ifstream &ifst)
 	//Если контейнер не пустой
 	else
 	{
-		List *current = Top;
+		List* current = Top;
 		for (int j = 0; j < count - 1; j++)
 		{
 			current = current->Next;
@@ -225,7 +225,7 @@ void container::Clear()
 }
 
 // Ввод содержимого контейнера из указанного потока
-void container::In(ifstream &ifst)
+void container::In(ifstream& ifst)
 {
 	while (!ifst.eof()) {
 		if (add(ifst) != 0)
@@ -233,7 +233,7 @@ void container::In(ifstream &ifst)
 	}
 }
 
-bool film::Compare(film &other) {
+bool film::Compare(film& other) {
 	return Vowel() > other.Vowel();
 }
 
@@ -241,9 +241,9 @@ bool film::Compare(film &other) {
 void container::Sort()
 {
 	List* current = Top;
-	for (int i = 0; i < count; i++) 
+	for (int i = 0; i < count; i++)
 	{
-		if (current->data->Compare(*current->Next->data)) 
+		if (current->data->Compare(*current->Next->data))
 		{
 			List p;
 			p.data = current->data;
@@ -252,7 +252,7 @@ void container::Sort()
 			i = 0;
 			current = Top;
 		}
-		else 
+		else
 		{
 			current = current->Next;
 		}
@@ -275,3 +275,23 @@ void container::Out(ofstream& ofst)
 }
 //----------------------------------------------------
 
+//Вывод только игровых
+void film::OutGame(ofstream& ofst) {
+}
+void game::OutGame(ofstream& ofst) {
+	Out(ofst);
+}
+void cartoon::OutGame(ofstream& ofst) {
+}
+void doc::OutGame(ofstream& ofst) {
+}
+void container::OutGame(ofstream& ofst) {
+	List* current = Top;
+	ofst << "Только игровые фильмы." << endl;
+	for (int i = 0; i < count; i++) {
+
+		current->data->OutGame(ofst);
+		current = current->Next;
+	}
+}
+//----------------------------------------------------
