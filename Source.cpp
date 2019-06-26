@@ -3,16 +3,14 @@
 #include <fstream>
 using namespace std;
 
-//--------------------------------------------------
-
 //Ввод параметров игрового фильма из файла
 void game::InData(ifstream &ifst) {
-	ifst  >> name >> director;
+	ifst >> name >> director;
 }
 
 //Вывод параметров игрового фильма в поток
 void game::Out(ofstream &ofst) {
-	ofst << "Это игровой фильм. " << " Название фильма: " << name
+	ofst << "Это игровой фильм. Страна, где произведён фильм: " << ", Название фильма: " << name
 		<< ", Режиссёр: " << director << endl;
 }
 
@@ -20,12 +18,12 @@ void game::Out(ofstream &ofst) {
 
 //Ввод параметров мультфильма из потока
 void cartoon::InData(ifstream &ifst) {
-	ifst >>  name >> type;
+	ifst >> name >> type;
 }
 
 //Вывод параметров мультфильма в поток
 void cartoon::Out(ofstream &ofst) {
-	ofst << "Это мультильм. " << " Название фильма: " << name << ", вид мультфильма: ";
+	ofst << "Это мультильм. Страна, где произведён фильм: " << ", Название фильма: " << name << ", вид мультфильма: ";
 
 	if (type == 1) {
 		ofst << "рисованный" << endl;
@@ -35,6 +33,17 @@ void cartoon::Out(ofstream &ofst) {
 	}
 }
 
+//--------------------------------------------------
+
+//Ввод параметров мультфильма из потока
+void doc::InData(ifstream &ifst) {
+	ifst >> name >> date;
+}
+
+//Вывод параметров мультфильма в поток
+void doc::Out(ofstream &ofst) {
+	ofst << "Это доументальный фильм: " << ", Название фильма: " << name << ", Год выпуска: " << date << endl;
+}
 
 //--------------------------------------------------
 
@@ -54,6 +63,10 @@ film* film::In(ifstream &ifst)
 	{
 		fm = new cartoon;
 	}break;
+	case 3:
+	{
+		fm = new doc;
+	}break;
 	default:
 	{
 		return 0;
@@ -67,7 +80,6 @@ film* film::In(ifstream &ifst)
 //Инициализация контейнера
 container::container()
 {
-
 	Top = nullptr;
 	count = 0;
 }
@@ -81,8 +93,6 @@ container::List::List()
 }
 
 //--------------------------------------------------
-
-
 
 //Добавление узла
 int container::add(ifstream &ifst)
@@ -154,6 +164,7 @@ void container::In(ifstream &ifst)
 			count++;
 	}
 }
+
 
 // Вывод содержимого контейнера в указанный поток
 void container::Out(ofstream & ofst)

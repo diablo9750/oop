@@ -17,6 +17,7 @@ void main(int argc, char* argv[])
 
 	ifstream ifst("in.txt");
 	ofstream ofst("out.txt", ios::trunc);
+
 	/*if (argc != 3) {
 		cout << "incorrect command line! "
 			"Waited: command in_file out_file"
