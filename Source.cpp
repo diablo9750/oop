@@ -74,12 +74,12 @@ void container::Vowel(ifstream &ifst, ofstream &ofst)
 
 //Ввод параметров игрового фильма из файла
 void game::InData(ifstream &ifst) {
-	ifst >> name >> director;
+	ifst >> country >> name >> director;
 }
 
 //Вывод параметров игрового фильма в поток
 void game::Out(ofstream &ofst) {
-	ofst << "Это игровой фильм." << ", Название фильма: " << name
+	ofst << "Это игровой фильм. Страна, где произведён фильм: " << country << ", Название фильма: " << name
 		<< ", Режиссёр: " << director << endl;
 }
 
@@ -87,12 +87,12 @@ void game::Out(ofstream &ofst) {
 
 //Ввод параметров мультфильма из потока
 void cartoon::InData(ifstream &ifst) {
-	ifst >> name >> type;
+	ifst >> country >> name >> type;
 }
 
 //Вывод параметров мультфильма в поток
 void cartoon::Out(ofstream &ofst) {
-	ofst << "Это мультильм. " << ", Название фильма: " << name << ", вид мультфильма: ";
+	ofst << "Это мультильм. Страна, где произведён фильм: " << country << ", Название фильма: " << name << ", вид мультфильма: ";
 
 	if (type == 1) {
 		ofst << "рисованный" << endl;
@@ -260,7 +260,7 @@ void container::Sort()
 }
 
 // Вывод содержимого контейнера в указанный поток
-void container::Out(ofstream & ofst)
+void container::Out(ofstream& ofst)
 {
 	List* current = Top;
 	Sort();
@@ -272,7 +272,6 @@ void container::Out(ofstream & ofst)
 		ofst << "Количество гласных в названии: " << current->data->Vowel() << endl;
 		current = current->Next;
 	}
-
 }
 //----------------------------------------------------
 
