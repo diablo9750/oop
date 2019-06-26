@@ -12,7 +12,7 @@ void game::InData(ifstream &ifst) {
 
 //Вывод параметров игрового фильма в поток
 void game::Out(ofstream &ofst) {
-	ofst << "Это игровой фильм. " << " Название фильма: " << name
+	ofst << "Это игровой фильм. " << ", Название фильма: " << name
 		<< ", Режиссёр: " << director << endl;
 }
 
@@ -20,12 +20,12 @@ void game::Out(ofstream &ofst) {
 
 //Ввод параметров мультфильма из потока
 void cartoon::InData(ifstream &ifst) {
-	ifst >>  name >> type;
+	ifst >> name >> type;
 }
 
 //Вывод параметров мультфильма в поток
 void cartoon::Out(ofstream &ofst) {
-	ofst << "Это мультильм. " << " Название фильма: " << name << ", вид мультфильма: ";
+	ofst << "Это мультильм. " << ", Название фильма: " << name << ", вид мультфильма: ";
 
 	if (type == 1) {
 		ofst << "рисованный" << endl;
@@ -34,7 +34,6 @@ void cartoon::Out(ofstream &ofst) {
 		ofst << "кукольный" << endl;
 	}
 }
-
 
 //--------------------------------------------------
 
@@ -53,7 +52,7 @@ film* film::In(ifstream &ifst)
 	case 2:
 	{
 		fm = new cartoon;
-	}break;
+	}break;;
 	default:
 	{
 		return 0;
@@ -67,7 +66,6 @@ film* film::In(ifstream &ifst)
 //Инициализация контейнера
 container::container()
 {
-
 	Top = nullptr;
 	count = 0;
 }
@@ -81,8 +79,6 @@ container::List::List()
 }
 
 //--------------------------------------------------
-
-
 
 //Добавление узла
 int container::add(ifstream &ifst)
@@ -167,3 +163,22 @@ void container::Out(ofstream & ofst)
 		current = current->Next;
 	}
 }
+
+//Вывод только игровых
+void film::OutGame(ofstream &ofst) {
+}
+void game::OutGame(ofstream &ofst) {
+	Out(ofst);
+}
+void cartoon::OutGame(ofstream& ofst) {
+}
+void container::OutGame(ofstream &ofst) {
+	List* current = Top;
+	ofst << "Только игровые фильмы." << endl;
+	for (int i = 0; i < count; i++) {
+		
+		current->data->OutGame(ofst);
+		current = current->Next;
+	}
+}
+//----------------------------------------------------
