@@ -38,11 +38,28 @@ int cartoon::Vowel() {
 	return count;
 }
 
+int doc::Vowel() {
+	int count = 0;
+	char mass[] = { "аеоуияэыёАЁОУИЯЭЫЁ" };
+	for (int i = 0; i < strlen(name); i++)
+	{
+		for (int j = 0; j < strlen(mass); j++)
+		{
+			if (name[i] == mass[j])
+			{
+				count++;
+			}
+		}
+	}
+	return count;
+}
+
 // Вывод содержимого контейнера
 void container::Vowel(ifstream &ifst, ofstream &ofst)
 {
 	ofst << "Контейнер содержит количество элементов равное: " << count << endl;
 	List* current = Top;
+	Sort();
 	film *fm;
 	for (int j = 0; j < count; j++)
 	{
@@ -63,7 +80,7 @@ void game::InData(ifstream &ifst) {
 
 //Вывод параметров игрового фильма в поток
 void game::Out(ofstream &ofst) {
-	ofst << "Это игровой фильм: " << ", Название фильма: " << name
+	ofst << "Это игровой фильм." << ", Название фильма: " << name
 		<< ", Режиссёр: " << director << endl;
 }
 
@@ -76,7 +93,7 @@ void cartoon::InData(ifstream &ifst) {
 
 //Вывод параметров мультфильма в поток
 void cartoon::Out(ofstream &ofst) {
-	ofst << "Это мультильм: " << ", Название фильма: " << name << ", вид мультфильма: ";
+	ofst << "Это мультильм. " << ", Название фильма: " << name << ", вид мультфильма: ";
 
 	if (type == 1) {
 		ofst << "рисованный" << endl;
@@ -202,10 +219,37 @@ void container::In(ifstream &ifst)
 	}
 }
 
+bool film::Compare(film &other) {
+	return Vowel() > other.Vowel();
+}
+
+// Сортировка содержимого контейнера
+void container::Sort()
+{
+	List* current = Top;
+	for (int i = 0; i < count; i++) 
+	{
+		if (current->data->Compare(*current->Next->data)) 
+		{
+			List p;
+			p.data = current->data;
+			current->data = current->Next->data;
+			current->Next->data = p.data;
+			i = 0;
+			current = Top;
+		}
+		else 
+		{
+			current = current->Next;
+		}
+	}
+}
+
 // Вывод содержимого контейнера в указанный поток
 void container::Out(ofstream & ofst)
 {
 	List* current = Top;
+	Sort();
 	ofst << "Контейнер содержит количество элементов равное: " << count << endl;
 	for (int j = 0; j < count; j++)
 	{
